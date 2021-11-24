@@ -10,7 +10,8 @@ node {
     stage('Build image') {
         /* This builds the actual image */
 
-        app = docker.build("anandr72/nodeapp")
+        app = docker.build("dpadhan/nodejs-jenkins", "dpadhan/nodejs-jenkins:version2")
+	
     }
 
     stage('Test image') {
@@ -27,6 +28,7 @@ node {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
+	    app.push("version2")
             } 
                 echo "Trying to Push Docker Build to DockerHub"
     }
